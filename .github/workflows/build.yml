@@ -13,18 +13,26 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SHA: ${{ github.sha }}
+      QTWEBENGINE_DISABLE_SANDBOX: 1
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22.14.0'
       - run: sudo apt update
-      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev
+      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev xvfb libgl1-mesa-glx libxcb-xinerama0
       - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
       - run: sudo npm install honkit
       - run: mkdir output
       - run: sudo npx honkit build
-      - run: sudo npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf
+      - name: Run Xvfb and Calibre with sandbox disabled
+        run: |
+          xvfb-run --server-args="-screen 0 1024x768x24" \
+            sudo npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf \
+            --ebook-convert-args="--disable-sandbox"
+        env:
+          QT_QPA_PLATFORM: offscreen
+          CALIBRE_USE_SYSTEM_QT: "1"
       - name: Upload pdf Artifact
         uses: actions/upload-artifact@v4
         with:
