@@ -26,7 +26,7 @@ jobs:
       - run: mkdir output
       - run: sudo npx honkit build
       - name: Run Xvfb and Calibre with sandbox disabled
-        run: npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf --no-sandbox
+        run: npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf
         env:
           QT_QPA_PLATFORM: offscreen
           CALIBRE_USE_SYSTEM_QT: "1"
