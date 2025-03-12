@@ -20,7 +20,8 @@ jobs:
         with:
           node-version: '22.14.0'
       - run: sudo apt update
-      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev xvfb libxcb-xinerama0 libxkbcommon-x11-0 libfontconfig1
+      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev xvfb libxcb-xinerama0 libxkbcommon-x11-0 libfontconfig1 \
+                              libxcb-shm0 libxcb-render0 libvulkan1 mesa-utils
       - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
       - run: sudo npm install honkit
       - run: mkdir output
@@ -28,7 +29,7 @@ jobs:
       - name: Run Xvfb and Calibre with sandbox disabled
         run: |
           xvfb-run --server-args="-screen 0 1024x768x24" \
-            sudo npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf \
+          npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf --no-sandbox
         env:
           QT_QPA_PLATFORM: offscreen
           CALIBRE_USE_SYSTEM_QT: "1"
