@@ -21,10 +21,7 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev
       - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
-      - run: npm install gitbook-cli
-      - run: |
-          cd node_modules/gitbook-cli/node_modules/npm/node_modules/
-          npm install graceful-fs@4.2.0 --save --force
+      - run: npm install gitbook
       - run: npx gitbook install
       - run: mkdir output
       - run: npx gitbook pdf . ./output/typescript-book-${SHA}.pdf
