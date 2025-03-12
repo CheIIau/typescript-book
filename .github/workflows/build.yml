@@ -24,6 +24,7 @@ jobs:
       - run: sudo npm install honkit
       - run: sudo npm i @honkit/honkit-plugin-highlight
       - run: mkdir output
+      - run: npx honkit build
       - run: npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf
       - name: Upload pdf Artifact
         uses: actions/upload-artifact@v4
