@@ -20,8 +20,7 @@ jobs:
         with:
           node-version: '22.14.0'
       - run: sudo apt update
-      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev xvfb libxcb-xinerama0 libxkbcommon-x11-0 libfontconfig1 \
-                              mesa-utils
+      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev xvfb libxcb-xinerama0 libxkbcommon-x11-0 libfontconfig1
       - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
       - run: sudo npm install honkit
       - run: mkdir output
