@@ -1,4 +1,4 @@
-name: build ebook
+name: Build Ebook
 
 on:
   push:
@@ -21,11 +21,10 @@ jobs:
       - run: sudo apt update
       - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev
       - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
-      - run: npm install gitbook
-      - run: npx gitbook install
+      - run: sudo npm install honkit
       - run: mkdir output
-      - run: npx gitbook pdf . ./output/typescript-book-${SHA}.pdf
-      - name: upload pdf artifact
+      - run: npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf
+      - name: Upload PDF Artifact
         uses: actions/upload-artifact@v4
         with:
           name: typescript-book.pdf
