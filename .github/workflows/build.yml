@@ -1,0 +1,32 @@
+name: build ebook
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.18.2'
+      - run: sudo apt update
+      - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev
+      - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
+      - run: sudo npm install -g gitbook-cli
+      - run: gitbook install
+      - run: mkdir output
+      - run: gitbook pdf . ./output/typescript-book-${SHA}.pdf
+      - name: upload pdf artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: typescript-book.pdf
+          path: output/typescript-book-${{ env.SHA }}.pdf
