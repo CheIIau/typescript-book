@@ -1,7 +1,7 @@
 {
   "language": "ru",
   "title": "TypeScript Deep Dive",
-  "plugins": ["highlight"],
+  "plugins": ["-highlight"],
   "pluginsConfig": {
     "layout": {
       "headerPath" : "header.html"

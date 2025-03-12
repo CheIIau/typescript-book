@@ -22,7 +22,6 @@ jobs:
       - run: sudo apt install libegl1 libopengl0 libxcb-cursor-dev
       - run: sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh | sudo sh /dev/stdin
       - run: sudo npm install honkit
-      - run: sudo npm i @honkit/honkit-plugin-highlight
       - run: mkdir output
       - run: npx honkit build
       - run: npx honkit pdf . ./output/typescript-book-${{ env.SHA }}.pdf
